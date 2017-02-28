@@ -14,9 +14,9 @@ endif
 
 BDROID_DIR := $(TOP_DIR)system/bt
 
-ifeq ($(strip $(USE_BLUETOOTH_BCM4343)),true)
+#ifeq ($(strip $(USE_BLUETOOTH_BCM4343)),true)
 LOCAL_CFLAGS += -DUSE_BLUETOOTH_BCM4343
-endif
+#endif
 
 LOCAL_CFLAGS += \
         -Wall \
@@ -62,5 +62,7 @@ LOCAL_PROPRIETARY_MODULE := true
 include $(LOCAL_PATH)/vnd_buildcfg.mk
 
 include $(BUILD_SHARED_LIBRARY)
-
+ifeq ($(TARGET_PRODUCT), evk_7ulp)
+    include $(LOCAL_PATH)/conf/fsl/evk_7ulp/Android.mk
+endif
 endif # BOARD_HAVE_BLUETOOTH_BCM
