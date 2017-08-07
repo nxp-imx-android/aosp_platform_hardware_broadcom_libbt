@@ -77,6 +77,9 @@ endif
 ifeq ($(TARGET_PRODUCT), sabresd_6dq_car)
     include $(LOCAL_PATH)/conf/fsl/sabresd_6dq/Android.mk
 endif
+ifeq ($(TARGET_PRODUCT), arm2_8q_car)
+    include $(LOCAL_PATH)/conf/fsl/arm2_8q/Android.mk
+endif
 ifeq ($(TARGET_PRODUCT), full_maguro)
     include $(LOCAL_PATH)/conf/samsung/maguro/Android.mk
 endif
