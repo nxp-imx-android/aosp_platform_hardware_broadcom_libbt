@@ -1,7 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 
 ifneq ($(BOARD_HAVE_BLUETOOTH_BCM),)
-
 include $(CLEAR_VARS)
 
 ifneq ($(BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR),)
@@ -53,7 +52,11 @@ LOCAL_SHARED_LIBRARIES := \
         libcutils \
         liblog
 
+ifeq ($(BOARD_WLAN_DEVICE),UNITE)
+LOCAL_MODULE := libbt-vendor-unite-bcm
+else
 LOCAL_MODULE := libbt-vendor
+endif
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_OWNER := broadcom
