@@ -52,7 +52,7 @@ LOCAL_SHARED_LIBRARIES := \
         libcutils \
         liblog
 
-ifeq ($(BOARD_WLAN_DEVICE),UNITE)
+ifeq ($(BOARD_WLAN_DEVICE_UNITE),UNITE)
 LOCAL_MODULE := libbt-vendor-unite-bcm
 else
 LOCAL_MODULE := libbt-vendor
