@@ -150,10 +150,13 @@ static int init_rfkill()
 {
     char path[64];
     char buf[16];
-    int fd, sz, id;
+    int fd, sz, id,auto_retry;
 
     if (is_rfkill_disabled())
         return -1;
+
+    char property_value[PROPERTY_VALUE_MAX] = {0};
+    property_get("vendor.all.car", property_value, false);
 
     for (id = 0; ; id++)
     {
@@ -163,7 +166,19 @@ static int init_rfkill()
         {
             ALOGE("init_rfkill : open(%s) failed: %s (%d)\n", \
                  path, strerror(errno), errno);
-            return -1;
+
+            for(auto_retry=0;auto_retry<8;auto_retry++)
+            {
+                if((fd = open(path, O_RDONLY)) >= 0)
+                    break;
+                sleep(1);
+                ALOGE("retrying open(%s), %d times\n", path,auto_retry);
+            }
+            if(fd<0)
+                return -1;
+        } else if (strcmp(property_value, "true") == 0) {
+            property_set("vendor.bluetooth.rfkill_initialized", "1");
+            ALOGE("Setup bluetooth rfkill sys node property\n");
         }
 
         sz = read(fd, &buf, sizeof(buf));
